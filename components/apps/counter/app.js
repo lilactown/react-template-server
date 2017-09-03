@@ -7,6 +7,7 @@ export default class CounterApp extends Component {
   constructor(props) {
     super(props);
     if (typeof window !== "undefined" && window.__COUNTER_APP_DATA__) {
+      // intitialize state with preloaded data
       console.log("state initializing");
       this.state = window.__COUNTER_APP_DATA__;
     } else {
@@ -40,29 +41,4 @@ export default class CounterApp extends Component {
       </div>
     );
   }
-}
-
-export function Page(props) {
-  const initialState = {
-    count: props.count ? parseInt(props.count, 10) : 0,
-    name: props.name ? props.name : ""
-  };
-  return (
-    <BasicLayout>
-      {/* Preload our state */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-      window.__COUNTER_APP_DATA__ = ${JSON.stringify(initialState)};`
-        }}
-      />
-      <script src={asset("pages/counter/build/bundle.js")} />
-      <div
-        id="app"
-        dangerouslySetInnerHTML={{
-          __html: renderToString(<CounterApp {...props} />)
-        }}
-      />
-    </BasicLayout>
-  );
 }

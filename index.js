@@ -1,7 +1,7 @@
 const express = require("express");
 
 function getTemplate(path) {
-  return require(`./components/pages${path}/template.js`);
+  return require(`./components/pages${path}/index.js`);
 }
 
 async function renderHandler(req, res) {

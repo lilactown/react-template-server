@@ -20,8 +20,6 @@ export default class MyPage extends Component {
     return { ...props, greeting };
   }
 
-  static isStatic = true;
-
   render() {
     const { greeting, name } = this.props;
 
