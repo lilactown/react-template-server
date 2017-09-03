@@ -1,6 +1,4 @@
 const express = require("express");
-const React = require("react");
-const { renderToStaticMarkup, renderToString } = require("react-dom/server");
 
 function getTemplate(path) {
   return require(`./components/pages${path}/template.js`);
@@ -21,10 +19,16 @@ async function renderHandler(req, res) {
 
 function main(port) {
   const app = express();
+
+  // example serving of assets; we need this to serve the built
+  // client side code. Could (should?) be served by a different
+  // system, put here to show off
   app.use("/assets", express.static("components"));
+
+  // mount our renderer
   app.get("*", renderHandler);
   app.listen(port);
-  console.log(`Listening on ${port}`);
+  console.log(`Template engine listening on ${port}`);
 }
 
 main(3030);
