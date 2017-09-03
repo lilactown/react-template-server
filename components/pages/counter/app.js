@@ -26,7 +26,6 @@ export default class CounterApp extends Component {
   render() {
     return (
       <div>
-        <script src={asset("pages/counter/build/bundle.js")} />
         <div>
           My name is:{" "}
           <input value={this.state.name} onChange={this.changeName} />
@@ -57,6 +56,7 @@ export function Page(props) {
       window.__COUNTER_APP_DATA__ = ${JSON.stringify(initialState)};`
         }}
       />
+      <script src={asset("pages/counter/build/bundle.js")} />
       <div
         id="app"
         dangerouslySetInnerHTML={{
