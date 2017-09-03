@@ -3,7 +3,7 @@ const React = require("react");
 const { renderToStaticMarkup, renderToString } = require("react-dom/server");
 
 function getTemplate(path) {
-  return require(`./components/pages${path}/server`);
+  return require(`./components/pages${path}/server.js`);
 }
 
 function render(template, props, isStatic = false) {
@@ -17,6 +17,7 @@ function render(template, props, isStatic = false) {
 async function renderHandler(req, res) {
   try {
     const template = getTemplate(req.path);
+    console.log(template);
     const props = template.initializeProps
       ? await template.initializeProps(req.query)
       : req.query;
