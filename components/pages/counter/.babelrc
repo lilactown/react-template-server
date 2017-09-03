@@ -1,4 +1,12 @@
 {
-  "plugins": ["transform-object-rest-spread", "transform-class-properties"],
-  "presets": ["react", ["env", { "useBuiltIns": true }]]
+  "env": {
+    "client": {
+      "presets": ["react", ["env", { "modules": false, "useBuiltIns": true }]],
+      "plugins": ["transform-object-rest-spread", "transform-class-properties"]
+    },
+    "development": {
+      "presets": ["react", ["env", { "useBuiltIns": true }]],
+      "plugins": ["transform-object-rest-spread", "transform-class-properties"]
+    }
+  }
 }

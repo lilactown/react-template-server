@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { renderToString } from "react-dom/server";
 import BasicLayout from "../../layouts/Basic";
+import asset from "../../common/asset";
 
 export default class CounterApp extends Component {
   constructor(props) {
@@ -17,7 +19,8 @@ export default class CounterApp extends Component {
 
   render() {
     return (
-      <BasicLayout>
+      <div>
+        <script src={asset("pages/counter/build/bundle.js")} />
         <div>
           My name is:{" "}
           <input value={this.state.name} onChange={this.changeName} />
@@ -28,7 +31,20 @@ export default class CounterApp extends Component {
             </div>
           </div>
         </div>
-      </BasicLayout>
+      </div>
     );
   }
+}
+
+export function Page(props) {
+  return (
+    <BasicLayout>
+      <div
+        id="app"
+        dangerouslySetInnerHTML={{
+          __html: renderToString(<CounterApp {...props} />)
+        }}
+      />
+    </BasicLayout>
+  );
 }
