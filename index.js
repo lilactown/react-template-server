@@ -3,27 +3,15 @@ const React = require("react");
 const { renderToStaticMarkup, renderToString } = require("react-dom/server");
 
 function getTemplate(path) {
-  return require(`./components/pages${path}/server.js`);
-}
-
-function render(template, props, isStatic = false) {
-  const el = React.createElement(template, props);
-  if (isStatic) {
-    return renderToStaticMarkup(el);
-  }
-  return renderToString(el);
+  return require(`./components/pages${path}/template.js`);
 }
 
 async function renderHandler(req, res) {
   try {
     const template = getTemplate(req.path);
-    console.log(template);
-    const props = template.initializeProps
-      ? await template.initializeProps(req.query)
-      : req.query;
 
-    console.log(props);
-    const html = render(template, props, template.isStatic);
+    // sometimes render is async (e.g. we are fetching data)
+    const html = await template.render(req.query);
     res.send(html);
   } catch (e) {
     console.log(e.stack);
@@ -33,6 +21,7 @@ async function renderHandler(req, res) {
 
 function main(port) {
   const app = express();
+  app.use("/assets", express.static("components"));
   app.get("*", renderHandler);
   app.listen(port);
   console.log(`Listening on ${port}`);

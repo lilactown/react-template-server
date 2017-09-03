@@ -10,5 +10,3 @@ export default function HelloTemplate(props) {
     </html>
   );
 }
-
-HelloTemplate.isStatic = true;
