@@ -5,6 +5,6 @@ const Page = require("./app").Page;
 
 module.exports = {
   render(props) {
-    return renderToStaticMarkup(Page(props));
+    return "<!DOCTYPE html>" + renderToStaticMarkup(Page(props));
   }
 };

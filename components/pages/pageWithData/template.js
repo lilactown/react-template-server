@@ -8,6 +8,9 @@ module.exports = {
   async render(props) {
     const newProps = await Page.initializeProps(props);
     console.log(newProps);
-    return renderToStaticMarkup(React.createElement(Page, newProps));
+    return (
+      "<!DOCTYPE html>" +
+      renderToStaticMarkup(React.createElement(Page, newProps))
+    );
   }
 };
