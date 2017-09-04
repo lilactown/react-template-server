@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { renderToString } from "react-dom/server";
 import BasicLayout from "../../layouts/Basic";
 import asset from "../../common/asset";
+import InlineScript from "../../common/InlineScript";
+import EmbedApp from "../../common/EmbedApp";
 import CounterApp from "../../apps/counter/app";
 
 export default function Page(props) {
@@ -12,22 +13,28 @@ export default function Page(props) {
   return (
     <BasicLayout>
       {/* Preload our state */}
-      <script
+      {/* <script
         dangerouslySetInnerHTML={{
           __html: `
       window.__COUNTER_APP_DATA__ = ${JSON.stringify(initialState)};`
         }}
+      /> */}
+      <InlineScript
+        body={`window.__COUNTER_APP_DATA__ = ${JSON.stringify(initialState)};`}
       />
       {/* Include the client side bundle */}
       <script src={asset("apps/counter/build/bundle.js")} />
       {/* Render to string (instead of static) so that React can mount
           on the div and reuse the DOM efficiently */}
-      <div
+      {/* <div
         id="app"
         dangerouslySetInnerHTML={{
           __html: renderToString(<CounterApp {...props} />)
         }}
-      />
+      /> */}
+      <EmbedApp id="app">
+        <CounterApp {...props} />
+      </EmbedApp>
     </BasicLayout>
   );
 }
