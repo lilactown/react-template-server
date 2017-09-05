@@ -8,12 +8,14 @@ React components as page templates.
 # clone the repo
 git clone https://github.com/Lokeh/react-template-server.git
 
-# install dependencies for our 
+# install dependencies for our service
 cd react-template-server && yarn
+
+# install dependencies for our component library
 cd components && yarn
 
 # build our basic counter app
-cd apps/counter && yarn build:client
+cd apps/counter && yarn && yarn build:client
 
 # run the server
 cd ../../../
