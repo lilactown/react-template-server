@@ -22,6 +22,15 @@ cd ../../../
 node index.js
 ```
 
+Now you can go access a page through http://localhost:3030 - e.g.:
+
+1. http://localhost:3030/hello
+2. http://localhost:3030/hello?name=Sarah
+3. http://localhost:3030/pageWithData?name=Dan
+3. http://localhost:3030/pageWithData?name=Dan&country=France
+4. http://localhost:3030/counter
+5. http://localhost:3030/counter?count=1000&name=Karen
+
 ## Use case
 - We can share UI components (styling, structure, logic and behavior) between server-side rendered templates
 and client-side rendered dynamic apps.
