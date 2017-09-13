@@ -2,20 +2,58 @@
 
 external logo : string = "./logo.svg" [@@bs.module];
 
-let component = ReasonReact.statelessComponent "App";
+type state = {
+  name: string,
+  count: int
+};
 
-let make ::message _children => {
+type actions =
+  | ChangeName string
+  | Increment
+  | Decrement;
+
+let component = ReasonReact.reducerComponent "App";
+
+let make _children => {
   ...component,
-  render: fun _self =>
+  initialState: fun () => {name: "", count: 0},
+  reducer: fun action state =>
+    switch action {
+    | ChangeName text => ReasonReact.Update {...state, name: text}
+    | Increment => ReasonReact.Update {...state, count: state.count + 1}
+    | Decrement => ReasonReact.Update {...state, count: state.count - 1}
+    },
+  render: fun self =>
     <div className="App">
       <div className="App-header">
         <img src=logo className="App-logo" alt="logo" />
-        <h2> (ReasonReact.stringToElement message) </h2>
+        <h2> (ReasonReact.stringToElement "Welcome!") </h2>
       </div>
-      <p className="App-intro">
-        (ReasonReact.stringToElement "To get started, edit")
-        <code> (ReasonReact.stringToElement " src/App.re ") </code>
-        (ReasonReact.stringToElement "and save to reload.")
-      </p>
+      <div style=(ReactDOMRe.Style.make marginTop::"20px" ())>
+        <div>
+          <input
+            onChange=(
+              self.reduce (
+                fun ev => {
+                  /* Accessing the underlying dom `target` requires wrapping the React event in several calls */
+                  let text = (ReactDOMRe.domElementToObj (ReactEventRe.Form.target ev))##value;
+                  ChangeName text
+                }
+              )
+            )
+            value=self.state.name
+          />
+        </div>
+        (ReasonReact.stringToElement "Count: ")
+        (ReasonReact.stringToElement (string_of_int self.state.count))
+        <div>
+          <button onClick=(self.reduce (fun _ => Increment))>
+            (ReasonReact.stringToElement "+")
+          </button>
+          <button onClick=(self.reduce (fun _ => Decrement))>
+            (ReasonReact.stringToElement "-")
+          </button>
+        </div>
+      </div>
     </div>
 };
