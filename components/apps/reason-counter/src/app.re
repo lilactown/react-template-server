@@ -57,3 +57,6 @@ let make _children => {
       </div>
     </div>
 };
+
+/* export the component for use in JS */
+let default = ReasonReact.wrapReasonForJs ::component;
