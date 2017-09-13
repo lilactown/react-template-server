@@ -59,4 +59,4 @@ let make _children => {
 };
 
 /* export the component for use in JS */
-let default = ReasonReact.wrapReasonForJs ::component;
+let default = ReasonReact.wrapReasonForJs ::component (fun _ => make [||]);
