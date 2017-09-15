@@ -1,7 +1,6 @@
-[%bs.raw {|require('./app.css')|}];
+/*[%bs.raw {|require('./app.css')|}];*/
 
-external logo : string = "./logo.svg" [@@bs.module];
-
+/* external logo : string = "./logo.svg" [@@bs.module]; */
 type state = {
   name: string,
   count: int
@@ -26,9 +25,8 @@ let make _children => {
   render: fun self =>
     <div className="App">
       <div className="App-header">
-        <img src=logo className="App-logo" alt="logo" />
-        <h2> (ReasonReact.stringToElement "Welcome!") </h2>
-      </div>
+         /*<img src=logo className="App-logo" alt="logo" /> */
+         <h2> (ReasonReact.stringToElement "Welcome!") </h2> </div>
       <div style=(ReactDOMRe.Style.make marginTop::"20px" ())>
         <div>
           <input
@@ -59,4 +57,4 @@ let make _children => {
 };
 
 /* export the component for use in JS */
-let default = ReasonReact.wrapReasonForJs ::component (fun _ => make [||]);
+let jsComponent = ReasonReact.wrapReasonForJs ::component (fun _ => make [||]);
